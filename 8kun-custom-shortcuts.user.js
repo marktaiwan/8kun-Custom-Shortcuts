@@ -61,7 +61,6 @@ const CSS = `
  */
 const presets = {
   default: {
-    toIndex:     [{key: 'KeyI'}],
     toCatelog:   [{key: 'KeyC'}],
     focusSearch: [{key: 'KeyS'}],
   },
