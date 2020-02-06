@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         8kun Custom Shortcuts
 // @description  Configurable shortcuts and enhanced keyboard navigations.
-// @version      1.0.0
+// @version      1.0.1
 // @author       Marker
 // @license      The Unlicense
 // @namespace    https://github.com/marktaiwan/
@@ -1062,5 +1062,13 @@ function init() {
   });
 }
 
-init();
+function onReady() {
+  if (window.jQuery) {
+    init();
+  } else {
+    window.setTimeout(onReady, 500);
+  }
+}
+
+onReady();
 })();
