@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         8kun Custom Shortcuts
 // @description  Configurable shortcuts and enhanced keyboard navigations.
-// @version      1.0.1
+// @version      1.0.2
 // @author       Marker
 // @license      The Unlicense
 // @namespace    https://github.com/marktaiwan/
 // @homepageURL  https://github.com/marktaiwan/8kun-Custom-Shortcuts
 // @supportURL   https://github.com/marktaiwan/8kun-Custom-Shortcuts/issues
 // @match        https://8kun.top/*/*
-// @grant        none
+// @grant        GM_openInTab
 // @noframes
 // ==/UserScript==
 
@@ -74,6 +74,7 @@ const presets = {
     toggleKeyboardNav: [{key: 'KeyQ'}],
     openSelected:      [{key: 'KeyE'}],
     openInNewTab:      [{key: 'KeyE', shift: true}],
+    // OpenInBackground:  [],
     prev:              [{key: 'KeyZ'}],
     next:              [{key: 'KeyX'}],
     toPost:            [{key: 'KeyL'}],
@@ -300,6 +301,25 @@ const actions = {
         case 'catalog': {
           const anchor = $('.thread > a', mediaBox);
           if (anchor) window.open(anchor.href, '_blank');
+          break;
+        }
+      }
+    }
+  },
+  OpenInBackground: {
+    name: 'Open selected in background tab',
+    fn: () => {
+      const mediaBox = $(`.${SCRIPT_ID}--highlighted`);
+      if (!mediaBox) return;
+
+      switch (getPageType()) {
+        case 'index': case 'thread': {
+          GM_openInTab($('.fileinfo > a', mediaBox.closest('div.file')).href, {active: false});
+          break;
+        }
+        case 'catalog': {
+          const anchor = $('.thread > a', mediaBox);
+          if (anchor) GM_openInTab(anchor.href, {active: false});
           break;
         }
       }
