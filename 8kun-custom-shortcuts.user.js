@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         8kun Custom Shortcuts
 // @description  Configurable shortcuts and enhanced keyboard navigations.
-// @version      1.0.2
+// @version      1.0.3
 // @author       Marker
 // @license      The Unlicense
 // @namespace    https://github.com/marktaiwan/
@@ -485,10 +485,12 @@ const smoothscroll = (function () {
     const elapsed = timestamp - startTime;
     const maxVelocity = 40; // px/frame
     const easeDuration = 250;  // ms
+    const scale = window.devicePixelRatio;
 
-    const velocity = (elapsed > easeDuration)
+    const velocity = ((elapsed > easeDuration)
       ? maxVelocity
-      : maxVelocity * (elapsed / easeDuration);
+      : maxVelocity * (elapsed / easeDuration)
+    ) / scale;
 
     let x = 0;
     let y = 0;
